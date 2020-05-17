@@ -1,14 +1,13 @@
 /*########################################################################################
 #Title: Analysis of COVID-19 data for mortality in Korea
-#Author: Ashis K Das, Saji S Gopalan
-#Date created: Apr 14, 2020
+#Author: Ashis K Das, Shiba Mishra, Saji S Gopalan
 ########################################################################################*/
 
 clear
 
 cap log close
 
-import delimited "C:\Users\wb353328\OneDrive - WBG\Claims\covid\data\PatientInfo.csv"
+import delimited "<<DEFINE FILEPATH>>PatientInfo.csv"
 
 g id=_n
 encode sex, g(sex1)
@@ -76,28 +75,6 @@ la var province "Province"
 la var death "Death"
 ren mode exposure
 
-save "C:\Users\wb353328\OneDrive - WBG\Claims\covid\data\covid_kr", replace
-export delimited using "C:\Users\wb353328\OneDrive - WBG\Claims\covid\data\covid_kr.csv", nolabel replace
+save "<<DEFINE FILEPATH>>covid_kr", replace
+export delimited using "<<DEFINE FILEPATH>>covid_kr.csv", nolabel replace
 /*
-replace death = 0 in 1/1511
-replace death = 1 in 1511/3022
-*******************************************************************************************************************************************
-clear
-import delimited "C:\Users\wb353328\OneDrive - WBG\Claims\covid\data\latestdata.csv"
-*keep relevant vars
-keep age sex date_onset_symptoms date_admission_hospital date_confirmation outcome country_new
-g id=_n
-
-encode sex, g(sex1)
-encode country_new, g(country1)
-encode age, g(age1)
-encode outcome, g(outcome1)
-encode date_onset_symptoms, g(date_onset)
-encode date_admission_hospital, g(date_hosp)
-encode date_confirmation, g(date_conf)
-
-drop if age1==.
-keep if sex1==2 | sex1==3
-drop if outcome1==.
-drop if date_hosp==.
-*/
